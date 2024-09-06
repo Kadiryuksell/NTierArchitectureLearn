@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NTierArchitecture.Business.Features.Validators
 {
-    internal sealed class CreateProductValidator:AbstractValidator<CreateProductCommand>
+    public sealed class CreateProductValidator:AbstractValidator<CreateProductCommand>
     {
         public CreateProductValidator()
         {

@@ -33,7 +33,7 @@ namespace NTierArchitecture.DataAccess
             services.AddIdentityCore<AppUser>(cfr =>
             {
                 cfr.Password.RequireNonAlphanumeric = false;
-            });
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUnitOfWork>(sv => sv.GetRequiredService<ApplicationDbContext>());
 
