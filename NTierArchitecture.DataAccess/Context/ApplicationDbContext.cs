@@ -9,11 +9,6 @@ namespace NTierArchitecture.DataAccess.Context
 
     internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid>, IUnitOfWork
     {
-        public ApplicationDbContext()
-        {
-            
-        }
-
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
