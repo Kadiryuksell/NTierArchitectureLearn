@@ -1,9 +1,10 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using NTierArchitecture.Business.Features.Categories.CreateCategory;
 using NTierArchitecture.Entities.Models;
 using NTierArchitecture.Entities.Repositories;
 
-internal sealed class CreateCategoryCommandhandler : IRequestHandler<CreateCategoryCommand>
+internal sealed class CreateCategoryCommandhandler : IRequestHandler<CreateCategoryCommand, ErrorOr<Unit>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -13,13 +14,13 @@ internal sealed class CreateCategoryCommandhandler : IRequestHandler<CreateCateg
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
     }
-    public async Task Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Unit>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var isCategoryNameExists = await _categoryRepository.AnyAsync(p => p.Name == request.name, cancellationToken);
 
         if (isCategoryNameExists)
         {
-            throw new ArgumentException("Bu Kategori Daha Önce oluşturulmuş");
+            return Error.Conflict("NameIsExists","Bu Kategori Daha Önce oluşturulmuş");
         }
 
         Category category = new()
@@ -29,5 +30,6 @@ internal sealed class CreateCategoryCommandhandler : IRequestHandler<CreateCateg
 
         await _categoryRepository.AddAsync(category, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return Unit.Value;
     }
 }

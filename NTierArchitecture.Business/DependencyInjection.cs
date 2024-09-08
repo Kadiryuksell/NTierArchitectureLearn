@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using NTierArchitecture.Business.Behaviors;
+using NTierArchitecture.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace NTierArchitecture.Business
         {
             services.AddMediatR(cfr =>
             {
-                cfr.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+                cfr.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly,typeof(AppUser).Assembly);
                 cfr.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
