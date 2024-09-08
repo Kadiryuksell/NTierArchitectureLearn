@@ -19,8 +19,12 @@ namespace NTierArchitecture.WebApi.Controllers
         [RoleFilter("Category.Add")]
        public async Task<IActionResult> Add(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(request, cancellationToken);
-            return NoContent();
+            var response = await _mediator.Send(request, cancellationToken);
+            if (response.IsError)
+            {
+                return BadRequest(response.FirstError);
+            }
+            return Ok(response);
         }
 
 

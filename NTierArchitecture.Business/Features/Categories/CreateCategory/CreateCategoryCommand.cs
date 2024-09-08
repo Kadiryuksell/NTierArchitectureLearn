@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace NTierArchitecture.Business.Features.Categories.CreateCategory
 {
-    public sealed record CreateCategoryCommand(string name) : IRequest;
+    public sealed record CreateCategoryCommand(string name) : IRequest<ErrorOr<Unit>>;
 
 }
