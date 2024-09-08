@@ -4,6 +4,7 @@ using NTierArchitecture.Business.Features.Categories.CreateCategory;
 using NTierArchitecture.Business.Features.Categories.GetCategories;
 using NTierArchitecture.Business.Features.Categories.RemoveCategory;
 using NTierArchitecture.Business.Features.Categories.UpdateCategory;
+using NTierArchitecture.DataAccess.Authorization;
 using NTierArchitecture.WebApi.Abstractions;
 
 namespace NTierArchitecture.WebApi.Controllers
@@ -15,6 +16,7 @@ namespace NTierArchitecture.WebApi.Controllers
         }
 
         [HttpPost]
+        [RoleFilter("Category.Add")]
        public async Task<IActionResult> Add(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
@@ -23,6 +25,7 @@ namespace NTierArchitecture.WebApi.Controllers
 
 
         [HttpPost]
+        [RoleFilter("Category.Update")]
         public async Task<IActionResult> Update(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
@@ -30,6 +33,7 @@ namespace NTierArchitecture.WebApi.Controllers
         }
 
         [HttpPost]
+        [RoleFilter("Category.Remove")]
         public async Task<IActionResult> Remove(RemoveCategoryCommand request, CancellationToken cancellationToken)
         {
             await _mediator.Send(request, cancellationToken);
@@ -37,6 +41,7 @@ namespace NTierArchitecture.WebApi.Controllers
         }
 
         [HttpPost]
+        [RoleFilter("Category.GetAll")]
         public async Task<IActionResult> GetAllCategory(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
