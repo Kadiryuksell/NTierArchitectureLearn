@@ -15,6 +15,8 @@ namespace NTierArchitecture.Entities.Repositories
         IQueryable<T> GetWhere(Expression<Func<T, bool>> expression);
 
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
+
+        bool Any(Expression<Func<T, bool>> expression);
     }
 
 }
